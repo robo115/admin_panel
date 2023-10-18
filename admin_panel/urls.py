@@ -19,20 +19,36 @@ from django.urls import path
 from index.views import *
 
 
-handler404 = 'index.views.error'
+handler404 = "index.views.error"
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', login, name='login'),
-    path('logout/', logout, name='logout'),
-    path('index/', index, name='index'),
-    path('add_client/', add_client, name='add_client'),
-    path('client_delete/<int:client_id>', delete_client, name='delete_client'),
-    path('edit_client/<int:client_id>', edit_client, name='edit_client'),
-    path('add_notification_chanels/<int:client_id>', add_notification, name='addnotification'),
-    path('edit_notification_chanels/<int:client_id>', edit_notification_channels, name='edit_notification'),
-    path('add_filter_word/<int:client_id>', add_filter_words, name='add_filter_word'),
-    path('edit_filter_word/<int:client_id>/<int:word_id>', edit_filter_word, name='edit_filter_word'),
-    path('filter_word_list/<int:client_id>', filter_word_list, name='filter_word_list'),
-    path('delete_filter_word/<int:word_id>/<int:client_id>/', delete_filter_word, name="delete_word")
+    path("admin/", admin.site.urls),
+    path("", login, name="login"),
+    path("logout/", logout, name="logout"),
+    path("index/", index, name="index"),
+    path("add_client/", add_client, name="add_client"),
+    path("client_delete/<int:client_id>", delete_client, name="delete_client"),
+    path("edit_client/<int:client_id>", edit_client, name="edit_client"),
+    path(
+        "add_notification_chanels/<int:client_id>",
+        add_notification,
+        name="addnotification",
+    ),
+    path(
+        "edit_notification_chanels/<int:client_id>",
+        edit_notification_channels,
+        name="edit_notification",
+    ),
+    path("add_filter_word/<int:client_id>", add_filter_words, name="add_filter_word"),
+    path(
+        "edit_filter_word/<int:client_id>/<int:word_id>",
+        edit_filter_word,
+        name="edit_filter_word",
+    ),
+    path("filter_word_list/<int:client_id>", filter_word_list, name="filter_word_list"),
+    path(
+        "delete_filter_word/<int:word_id>/<int:client_id>/",
+        delete_filter_word,
+        name="delete_word",
+    ),
 ]

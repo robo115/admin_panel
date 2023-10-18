@@ -6,6 +6,7 @@ from django.shortcuts import get_object_or_404
 from django.core.paginator import Paginator
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
+
 # Create your views here.
 
 
@@ -21,7 +22,7 @@ def index(request):
 
 @login_required
 def add_client(request):
-    if request.method == 'POST':
+    if request.method == "POST":
         form = AddUserForm(data=request.POST)
         if form.is_valid():
             form.save()
@@ -43,21 +44,21 @@ def delete_client(request, client_id):
 
 
 def login(request):
-    if request.method == 'POST':
+    if request.method == "POST":
         form = UserLoginForm(data=request.POST)
         if form.is_valid():
-            username = request.POST['username']
-            password = request.POST['password']
+            username = request.POST["username"]
+            password = request.POST["password"]
             user = auth.authenticate(username=username, password=password)
             if user:
                 auth.login(request, user)
-                return HttpResponseRedirect(reverse('index'))
+                return HttpResponseRedirect(reverse("index"))
     else:
         form = UserLoginForm
     context = {
-            'form': form,
-        }
-    return render(request, 'admin_panel/login.html', context)
+        "form": form,
+    }
+    return render(request, "admin_panel/login.html", context)
 
 
 @login_required
@@ -103,7 +104,7 @@ def edit_notification_channels(request, client_id):
         client = get_object_or_404(Clients, id=client_id)
         notification = client.notificationid
         form = NotificationForm(instance=notification)
-        context = {"form": form, "client": client, "client_id" : client_id}
+        context = {"form": form, "client": client, "client_id": client_id}
         return render(request, "admin_panel/add_notification_channels.html", context)
     elif request.method == "POST":
         client = get_object_or_404(Clients, id=client_id)
@@ -120,7 +121,11 @@ def filter_word_list(request, client_id):
     paginator = Paginator(filter_words, 8)
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
-    context = {"filter_words": filter_words, "client_id": client_id, "page_obj": page_obj}
+    context = {
+        "filter_words": filter_words,
+        "client_id": client_id,
+        "page_obj": page_obj,
+    }
     return render(request, "admin_panel/filterwords.html", context)
 
 
@@ -134,7 +139,9 @@ def add_filter_words(request, client_id):
             filter_word = Filterwords.objects.last()
             filter_word.clientid = client.id
             filter_word.save()
-            return HttpResponseRedirect(reverse("filter_word_list", kwargs={'client_id': client_id}))
+            return HttpResponseRedirect(
+                reverse("filter_word_list", kwargs={"client_id": client_id})
+            )
     else:
         form = FilterWordsForm()
         context = {"form": form, "client_id": client_id}
@@ -153,7 +160,9 @@ def edit_filter_word(request, client_id, word_id):
         form = FilterWordsForm(data=request.POST, instance=word)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse("filter_word_list", kwargs={'client_id': client_id}))
+            return HttpResponseRedirect(
+                reverse("filter_word_list", kwargs={"client_id": client_id})
+            )
 
 
 @login_required
@@ -165,9 +174,9 @@ def delete_filter_word(request, word_id, client_id):
 
 
 def error(request, exception):
-    return render(request, 'admin_panel/404.html', status=404)
+    return render(request, "admin_panel/404.html", status=404)
 
 
 def logout(request):
     auth.logout(request)
-    return HttpResponseRedirect(reverse('login'))
+    return HttpResponseRedirect(reverse("login"))
