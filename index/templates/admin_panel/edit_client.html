@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends 'admin_panel/add_client.html' %}
+{% block form %}
+    <form action="{% url 'edit_client' client_id=client.id %}" method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label class="small mb-1" for="inputUsername">Username (how your name will appear to other
+                users on the site)</label>
+            <div class="mb-3">
+                {{ form.username }}
+            </div>
+            <div class="mb-3">
+                {{ form.tts_enabled }} Text-to-Speech setting
+            </div>
+        </div>
+        <button class="btn btn-primary" type="submit">Save changes</button>
+        {% if notification %}
+            <a href="{% url 'edit_notification' client_id=client.id %}" class="btn btn-success" type="button">Edit
+                notification channels</a>
+        {% else %}
+            <a href="{% url 'addnotification' client_id=client.id %}" class="btn btn-success" type="button">Add
+                notification channels</a>
+        {% endif %}
+        <a href="{% url 'filter_word_list' client_id=client.id %}" class="btn btn-success" type="button">Filterwords</a>
+        <input type="button" class="btn btn-danger" value="Go back" onclick="history.back()">
+    </form>
+{% endblock %}

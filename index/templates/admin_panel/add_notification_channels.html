@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends 'admin_panel/add_client.html' %}
+{% block form %}
+    {% if client %}
+        <form action="{% url 'edit_notification' client_id=client_id %}" method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                {{ form.sms }}
+            </div>
+            <div class="mb-3">
+                {{ form.email }}
+            </div>
+            <div class="mb-3">
+                {{ form.whatsapp }}
+            </div>
+            <div class="mb-3">
+                {{ form.telegram }}
+            </div>
+            <div class="mb-3">
+                {{ form.comment }}
+            </div>
+            <button class="btn btn-primary" type="submit">Save changes</button>
+            <input type="button" class="btn btn-danger" value="Go back" onclick="history.back()">
+        </form>
+    {% else %}
+        <form action="{% url 'addnotification' client_id=client_id %}" method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                {{ form.sms }}
+            </div>
+            <div class="mb-3">
+                {{ form.email }}
+            </div>
+            <div class="mb-3">
+                {{ form.whatsapp }}
+            </div>
+            <div class="mb-3">
+                {{ form.telegram }}
+            </div>
+            <div class="mb-3">
+                {{ form.comment }}
+            </div>
+            <button class="btn btn-primary" type="submit">Save changes</button>
+            <input type="button" class="btn btn-danger" value="Go back" onclick="history.back()">
+        </form>
+    {% endif %}
+{% endblock %}

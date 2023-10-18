@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends 'admin_panel/add_client.html' %}
+{% block form %}
+    {% if client %}
+    <form action="{% url 'edit_filter_word' client_id=client.id word_id=word_id%}" method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            {{ form.word }}
+        </div>
+        <div class="mb-3">
+            {{ form.wordalias }}
+        </div>
+        <div class="mb-3">
+            {{ form.subwordalias }}
+        </div>
+        <div class="mb-3">
+            {{ form.stopword }}
+        </div>
+        <button class="btn btn-primary" type="submit">Save changes</button>
+        <input type="button" class="btn btn-danger" value="Go back" onclick="history.back()">
+    </form>
+    {% else %}
+    <form action="{% url 'add_filter_word' client_id=client_id%}" method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            {{ form.word }}
+        </div>
+        <div class="mb-3">
+            {{ form.wordalias }}
+        </div>
+        <div class="mb-3">
+            {{ form.subwordalias }}
+        </div>
+        <div class="mb-3">
+            {{ form.stopword }}
+        </div>
+        <button class="btn btn-primary" type="submit">Save changes</button>
+        <input type="button" class="btn btn-danger" value="Go back" onclick="history.back()">
+    </form>
+    {% endif %}
+{% endblock %}
